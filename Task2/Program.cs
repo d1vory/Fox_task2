@@ -1,2 +1,15 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Task2;
+
+Matrix mtr = new Matrix(4,4);
+mtr.Print();
+
+int[] snail = mtr.getSnailTrace();
+
+Console.Write("[");
+foreach (int k in snail)
+{
+    Console.Write("{0}, ", k);
+}
+Console.Write("]\n");
+
+//Console.WriteLine($"Trace is {mtr.GetTrace()}");
