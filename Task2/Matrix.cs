@@ -2,17 +2,25 @@ namespace Task2;
 
 public class Matrix
 {
-    public readonly int rows;
-    public readonly int columns;
-    private int[,] matrix;
+    public readonly int Rows;
+    public readonly int Columns;
+    private readonly int[,] _matrix;
 
-    public Matrix(int rows, int columns)
+    private readonly int _maxValue;
+    private readonly int _minValue;
+
+
+    public Matrix(int rows, int columns, int minValue=0, int maxValue=100, int? randomSeed = null)
     {
-        this.rows = rows;
-        this.columns = columns;
+        Rows = rows;
+        Columns = columns;
+        _minValue = minValue;
+        _maxValue = maxValue;
 
-        matrix = BuildMatrix(this.rows, this.columns);
+        _matrix = BuildMatrix(Rows, Columns, _minValue, _maxValue, randomSeed);
     }
+
+
 
     public int GetTrace()
     {
@@ -22,16 +30,16 @@ public class Matrix
     
     public void Print()
     {
-        for (int i = 0; i < rows; i++)
+        for (int i = 0; i < Rows; i++)
         {
             Console.Write("[");
-            for (int j = 0; j < columns; j++)
+            for (int j = 0; j < Columns; j++)
             {
                 if (i == j)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                 }
-                Console.Write($"{matrix[i, j]}, ");
+                Console.Write($"{_matrix[i, j]}, ");
                 Console.ForegroundColor = ConsoleColor.White;
             }
             Console.Write("]\n");
@@ -41,9 +49,9 @@ public class Matrix
     public int[] getSnailTrace()
     {
         int leftBorder = 0;
-        int rightBorder = columns - 1;
+        int rightBorder = Columns - 1;
         int topBorder = 0;
-        int bottomBorder = rows - 1;
+        int bottomBorder = Rows - 1;
         List<int> trail = new List<int>();
         
         while (true)
@@ -57,7 +65,7 @@ public class Matrix
             {
                 for (int i = topBorder; i <= bottomBorder; i++)
                 {
-                    trail.Add(matrix[i, rightBorder]);
+                    trail.Add(_matrix[i, rightBorder]);
                 }
 
                 return trail.ToArray();
@@ -65,22 +73,22 @@ public class Matrix
 
             for (int i = leftBorder; i < rightBorder; i++)
             {
-                trail.Add(matrix[topBorder, i]);
+                trail.Add(_matrix[topBorder, i]);
             }
 
             for (int i = topBorder; i < bottomBorder; i++)
             {
-                trail.Add(matrix[i, rightBorder]);
+                trail.Add(_matrix[i, rightBorder]);
             }
 
             for (int i = rightBorder; i > leftBorder; i--)
             {
-                trail.Add(matrix[bottomBorder, i]);
+                trail.Add(_matrix[bottomBorder, i]);
             }
 
             for (int i = bottomBorder; i > topBorder; i--)
             {
-                trail.Add(matrix[i, leftBorder]);
+                trail.Add(_matrix[i, leftBorder]);
             }
 
             leftBorder++;
@@ -90,9 +98,9 @@ public class Matrix
         }
     }
 
-    private static int[,] BuildMatrix(int rows, int columns, int minValue = 0, int maxValue=100)
+    private static int[,] BuildMatrix(int rows, int columns, int minValue, int maxValue, int? randomSeed=null)
     {
-        Random rnd = new Random();
+        Random rnd = randomSeed == null ? new Random() : new Random(randomSeed.Value);
         int[,] matrix = new int[rows, columns];
         for (int i = 0; i < rows; i++)
         {
@@ -107,14 +115,13 @@ public class Matrix
     
     private int[] GetMainDiagonal()
     {
-        int minDimension = Math.Min(columns, rows);
+        int minDimension = Math.Min(Columns, Rows);
         int[] trace = new int[minDimension];
         
         for (int i = 0; i < minDimension; i++)
         {
-            trace[i] = matrix[i, i];
+            trace[i] = _matrix[i, i];
         }
-
         return trace;
     }
     

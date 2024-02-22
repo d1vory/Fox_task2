@@ -1,7 +1,8 @@
 ﻿using Task2;
 
-Matrix mtr = new Matrix(4,4);
+Matrix mtr = new Matrix(4,4, randomSeed:7);
 mtr.Print();
+
 
 int[] snail = mtr.getSnailTrace();
 
