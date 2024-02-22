@@ -4,7 +4,7 @@ public class Matrix
 {
     public readonly int Rows;
     public readonly int Columns;
-    private readonly int[,] _matrix;
+    private int[,] _matrix;
 
 
     public Matrix(int rows, int columns, int minValue=0, int maxValue=100, int? randomSeed = null)
@@ -114,6 +114,7 @@ public class Matrix
     private void BuildMatrix(int minValue, int maxValue, int? randomSeed=null)
     {
         var rnd = randomSeed == null ? new Random() : new Random(randomSeed.Value);
+        _matrix = new int[Rows, Columns];
         for (int i = 0; i < Rows; i++)
         {
             for (int j = 0; j < Columns; j++)
