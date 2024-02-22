@@ -16,7 +16,7 @@ public class Matrix
         Rows = rows;
         Columns = columns;
 
-        _matrix = BuildMatrix(Rows, Columns, minValue, maxValue, randomSeed);
+        BuildMatrix(minValue, maxValue, randomSeed);
     }
 
     public int[,] GetMatrix()
@@ -38,12 +38,17 @@ public class Matrix
             Console.Write("[");
             for (int j = 0; j < Columns; j++)
             {
+                var elementText = $"{_matrix[i, j]},".PadLeft(3).PadRight(3);
                 if (i == j)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(elementText);
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
-                Console.Write($"{_matrix[i, j]}, ");
-                Console.ForegroundColor = ConsoleColor.White;
+                else
+                {
+                    Console.Write(elementText);
+                }
             }
             Console.Write("]\n");
         }
@@ -106,19 +111,16 @@ public class Matrix
         }
     }
 
-    private static int[,] BuildMatrix(int rows, int columns, int minValue, int maxValue, int? randomSeed=null)
+    private void BuildMatrix(int minValue, int maxValue, int? randomSeed=null)
     {
-        Random rnd = randomSeed == null ? new Random() : new Random(randomSeed.Value);
-        int[,] matrix = new int[rows, columns];
-        for (int i = 0; i < rows; i++)
+        var rnd = randomSeed == null ? new Random() : new Random(randomSeed.Value);
+        for (int i = 0; i < Rows; i++)
         {
-            for (int j = 0; j < columns; j++)
+            for (int j = 0; j < Columns; j++)
             {
-                matrix[i, j] = rnd.Next(minValue, maxValue);
+                _matrix[i, j] = rnd.Next(minValue, maxValue);
             }
         }
-
-        return matrix;
     }
     
     private int[] GetMainDiagonal()
