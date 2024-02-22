@@ -6,37 +6,34 @@ Console.WriteLine("Hello, to start, enter the dimensions of the matrix.");
 int rows;
 int columns;
 
+var isRowValid = false;
+var isColumnValid = false;
+
+
 do
 {
-    try
+    Console.WriteLine("Rows: ");
+    isRowValid = int.TryParse(Console.ReadLine(), out rows) && rows > 0;
+    if (!isRowValid)
     {
-        Console.WriteLine("Rows: ");
-        rows = int.Parse(Console.ReadLine());
-
-        Console.WriteLine("Columns: ");
-        columns = int.Parse(Console.ReadLine());
-
-        if ((rows <= 0) || (columns <= 0))
-        {
-            Console.WriteLine("Enter a positive number");
-        }
-        else
-        {
-            break;
-
-        }
+        Console.WriteLine("Enter a valid positive number");
     }
-    catch (SystemException)
+} while (!isRowValid);
+
+
+do
+{
+    Console.WriteLine("Columns: ");
+    isColumnValid = int.TryParse(Console.ReadLine(), out columns) && columns > 0;
+    if (!isColumnValid)
     {
-        Console.WriteLine("Enter a valid number");
+        Console.WriteLine("Enter a valid positive number");
     }
+} while (!isColumnValid);
 
-} while (true);
 
-
-Matrix mtr = new Matrix(rows,columns );
+var mtr = new Matrix(rows, columns);
 
 mtr.Print();
 
 Console.WriteLine($"Matrix trace is {mtr.GetTrace()}");
-
