@@ -6,20 +6,19 @@ public class Matrix
     public readonly int Columns;
     private readonly int[,] _matrix;
 
-    private readonly int _maxValue;
-    private readonly int _minValue;
-
 
     public Matrix(int rows, int columns, int minValue=0, int maxValue=100, int? randomSeed = null)
     {
         Rows = rows;
         Columns = columns;
-        _minValue = minValue;
-        _maxValue = maxValue;
 
-        _matrix = BuildMatrix(Rows, Columns, _minValue, _maxValue, randomSeed);
+        _matrix = BuildMatrix(Rows, Columns, minValue, maxValue, randomSeed);
     }
 
+    public int[,] GetMatrix()
+    {
+        return _matrix.Clone() as int[,] ?? new int[Rows, Columns];
+    }
 
 
     public int GetTrace()
@@ -48,6 +47,11 @@ public class Matrix
 
     public int[] getSnailTrace()
     {
+        if (Rows != Columns)
+        {
+            throw new NotImplementedException("Snail for rectangular matrix is not working \ud83d\ude1e");
+        }
+
         int leftBorder = 0;
         int rightBorder = Columns - 1;
         int topBorder = 0;
