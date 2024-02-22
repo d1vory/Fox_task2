@@ -9,6 +9,10 @@ public class Matrix
 
     public Matrix(int rows, int columns, int minValue=0, int maxValue=100, int? randomSeed = null)
     {
+        if (rows <= 0 || columns <= 0)
+        {
+            throw new ArgumentException($"Dimensions [{rows}, {columns}] are not positive numbers!");
+        }
         Rows = rows;
         Columns = columns;
 
@@ -17,7 +21,7 @@ public class Matrix
 
     public int[,] GetMatrix()
     {
-        return _matrix.Clone() as int[,] ?? new int[Rows, Columns];
+        return _matrix.Clone() as int[,];
     }
 
 

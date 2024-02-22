@@ -1,24 +1,42 @@
 ﻿using Task2;
 
-Matrix mtr = new Matrix(5,5, randomSeed:1);
+
+Console.WriteLine("Hello, to start, enter the dimensions of the matrix.");
+
+int rows;
+int columns;
+
+do
+{
+    try
+    {
+        Console.WriteLine("Rows: ");
+        rows = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Columns: ");
+        columns = int.Parse(Console.ReadLine());
+
+        if ((rows <= 0) || (columns <= 0))
+        {
+            Console.WriteLine("Enter a positive number");
+        }
+        else
+        {
+            break;
+
+        }
+    }
+    catch (SystemException)
+    {
+        Console.WriteLine("Enter a valid number");
+    }
+
+} while (true);
 
 
+Matrix mtr = new Matrix(rows,columns );
 
 mtr.Print();
 
-// int[,]? kek = mtr.GetMatrix();
-// if (kek != null) kek[0, 0] = 228;
-//
-// mtr.Print();
+Console.WriteLine($"Matrix trace is {mtr.GetTrace()}");
 
-
- int[] snail = mtr.getSnailTrace();
-
- Console.Write("[");
- foreach (int k in snail)
- {
-     Console.Write("{0}, ", k);
- }
- Console.Write("]\n");
-
-//Console.WriteLine($"Trace is {mtr.GetTrace()}");
