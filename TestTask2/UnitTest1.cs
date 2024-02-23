@@ -52,6 +52,15 @@ namespace TestTask2
             Assert.IsTrue(IsMatricesEqual(squareMatrix.GetMatrix(), preBuildSquareMatrix));
             Assert.IsTrue(IsMatricesEqual(rectMatrix1.GetMatrix(), preBuildRectMatrix1));
             Assert.IsTrue(IsMatricesEqual(rectMatrix2.GetMatrix(), preBuildRectMatrix2));
+
+            Assert.ThrowsException<ArgumentException>(() => new Matrix(-5,-4));
+            Assert.ThrowsException<ArgumentException>(() => new Matrix(-5,4));
+            Assert.ThrowsException<ArgumentException>(() => new Matrix(5,-4));
+
+            Assert.IsTrue(isMatrixElementsInRange(new Matrix(5,5).GetMatrix(), 0, 100));
+            Assert.IsTrue(isMatrixElementsInRange(new Matrix(5,5).GetMatrix(), 0, 100));
+            Assert.IsTrue(isMatrixElementsInRange(new Matrix(5,5, 10, 50).GetMatrix(), 10, 50));
+            Assert.IsTrue(isMatrixElementsInRange(new Matrix(5,5, -100, -10).GetMatrix(), -100, -10));
         }
 
         [TestMethod]
@@ -70,6 +79,8 @@ namespace TestTask2
 
             Assert.IsTrue(expectedSnail.SequenceEqual(squareMatrix.getSnailTrace()));
         }
+
+
 
 
         private bool IsMatricesEqual(int[,] fstArr, int[,] scndArr)
@@ -98,6 +109,22 @@ namespace TestTask2
             return true;
         }
 
+        private bool isMatrixElementsInRange(int[,] matrix, int minValue, int maxValue)
+        {
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    int el = matrix[i, j];
+                    if ((el < minValue) || (el > maxValue))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
 
     }
 }
